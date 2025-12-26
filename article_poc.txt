@@ -1,0 +1,28 @@
+Title: Predicting Athlete Performance Using Machine Learning
+
+Abstract
+This short project evaluates four machine learning models to predict athlete performance from training and demographic data. We compare model accuracy on a dataset of 200 athletes and discuss implications for sports science.
+
+1. Introduction
+Modern sports programs collect large amounts of athlete data (e.g., training hours, intensity, age, weight). This project explores whether machine learning models can predict an athlete's final performance score and which model provides the best accuracy.
+
+2. Materials and Methods
+- Dataset: 200 athletes with demographic and training variables (age, gender, training intensity, recovery days, etc.).
+- Preprocessing: removed ID fields, encoded categorical variables, and split data into training and test sets.
+- Models compared: Linear Regression, Decision Tree, Random Forest, Gradient Boosting.
+- Evaluation metric: average error (mean absolute error) on the test set; visualized using error charts.
+
+3. Results
+- Random Forest achieved the lowest average error (~10.95 points) and was the most accurate on the test set.
+- Decision Tree showed near-perfect performance on training data but performed poorly on the test set (overfitting).
+- Linear Regression was consistent but lacked flexibility to achieve top accuracy.
+- Gradient Boosting performed well but did not outperform Random Forest in this experiment.
+
+4. Discussion
+Predicting sports performance is complex; relationships between inputs and outcome are often non-linear. The Decision Tree's strong overfitting highlights the need for regularization or ensemble methods. The relatively low R-squared scores across models suggest noisy data or missing predictors (e.g., sleep, nutrition). Overall, ensemble approaches like Random Forest are promising for this application.
+
+5. Conclusion and Next Steps
+Machine learning can support athlete performance analysis; Random Forest was the best model among those tested here. Future work should include hyperparameter tuning, collecting more longitudinal data, and adding potentially relevant features (sleep, diet) to improve predictive power.
+
+Acknowledgments
+This project provides a starting point for integrating data-driven methods into coaching and athlete development.
