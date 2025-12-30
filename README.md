@@ -1,18 +1,18 @@
-# Runner-to-Skier Efficiency Analysis
+# Running Performance & Efficiency Analysis
 
 **Authors:** Jan Zubalewicz & Mateusz Kubita
 
 ## 🎯 Project Objective
-The goal of this project is to develop a **Cross-Sport Selection Model (CSSM)** to predict a runner's potential for cross-country skiing. By evaluating physiological and biomechanical data, we compare various machine learning algorithms to identify the best predictive approach for sport-specific efficiency.
+The primary goal of this project is to build a reliable model to predict a runner's **efficiency_score** based on physiological and biomechanical data. By analyzing metrics like $VO_2$ max, heart rate variability, and running mechanics, we aim to discover which machine learning algorithms best capture the complexity of endurance running performance.
 
 ## 📊 Dataset Overview
-This dataset focuses on endurance runners (1,158 records) and their physiological profiles:
-* **Demographics:** Age, Gender.
+The dataset focuses on 1,158 endurance runners, capturing:
+* **Demographics:** Age, Gender (Encoded: Female=1, Male=0).
 * **Physiological Data:** $VO_2$ max, HRV, Lactate Threshold, Resting and Max Heart Rate.
 * **Biomechanical Data:** Stride length and Cadence.
-* **Target Variable:** `efficiency_score` (Predicting potential in cross-country skiing).
+* **Target Variable:** `efficiency_score` (A composite metric representing running economy and performance).
 
-> **Note:** Redundant features and incomplete data (like `power_output`) were removed during preprocessing to ensure model stability.
+> **Data Cleaning:** Columns such as `athlete_id`, `sport`, and incomplete metrics like `power_output` were removed to focus the model strictly on running-related predictors.
 
 ## 🛠️ Tech Stack
 * **Language:** Python
@@ -20,23 +20,22 @@ This dataset focuses on endurance runners (1,158 records) and their physiologica
 * **Machine Learning:** `scikit-learn` (Linear Regression, Decision Tree, Random Forest, Gradient Boosting)
 
 ## 🚀 Model Comparison & Results
-Initially, complex models showed severe overfitting. After applying **GridSearchCV** and manual regularization to the Gradient Boosting model, we achieved a more stable (though challenging) baseline.
+We used **GridSearchCV** to optimize a Gradient Boosting Regressor, specifically to fix the severe overfitting observed in the initial Decision Tree model.
 
 | Model | Test MSE | Training MSE | Test R² | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Linear Regression** | 219.63 | 211.35 | -0.02 | Most stable baseline |
-| **Optimized GBR** | **218.85** | **199.74** | **-0.02** | **Best generalization** |
+| **Optimized GBR** | **218.85** | **199.74** | **-0.02** | **Best Generalization** |
+| **Linear Regression** | 219.63 | 211.35 | -0.02 | Stable Baseline |
 | **Random Forest** | 235.63 | 31.16 | -0.10 | Overfitting |
 | **Decision Tree** | 409.68 | 0.00 | -0.91 | Severe Overfitting |
 
 
 
 ## 🔍 Key Insights
-1.  **Overfitting Correction:** The original Decision Tree completely memorized the data (0.00 MSE). Through hyperparameter tuning (limiting `max_depth` and `learning_rate`), we successfully closed the gap between training and test performance.
-2.  **Model Stability:** The **Optimized Gradient Boosting** model (with `learning_rate: 0.01`) provided the best balance, ensuring that the model generalizes to new athletes rather than memorizing specific rows.
-3.  **Predictive Challenges:** All models achieved near-zero $R^2$ scores, suggesting that the current features have a weak linear relationship with the target. This indicates that predicting skiing efficiency likely requires more sport-specific technical data.
-4.  **Feature Importance:** Physiological markers like $VO_2$ max and HRV were identified as the primary drivers, confirming their importance in endurance sport transitions.
+1. **Handling Overfitting:** The original Decision Tree had a 0.00 Training MSE, meaning it memorized the data. By tuning `max_depth` and `learning_rate` in the Gradient Boosting model, we created a version that generalizes much better to new runners.
+2. **Predictive Drivers:** Physiological markers—specifically $VO_2$ max and Lactate Threshold—showed the highest importance in determining the `efficiency_score`.
+3. **Model Complexity:** While complex models (RF/GBR) are powerful, the relatively high MSE across all models suggests that running efficiency is influenced by factors not fully captured in the current dataset (e.g., training history or elevation data).
 
 ## 📂 Project Structure
-* `Athlete_Performance_Regression_Analysis_Zubalewicz_Kubita.ipynb` - Full data analysis, EDA, and hyperparameter tuning.
+* `Athlete_Performance_Regression_Analysis_Zubalewicz_Kubita.ipynb` - Full data analysis and modeling.
 * `README.md` - Project documentation.
